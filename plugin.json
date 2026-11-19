@@ -1,0 +1,78 @@
+{
+  "tesserae_compat": "1.x",
+  "name": "Picture, Random Pokémon Card",
+  "version": "0.1.0",
+  "kind": "widget",
+  "locales": ["en"],
+  "description": "A random Pokémon Trading Card Game card: from every card ever printed, from one series, or every card of one Pokémon. On larger cells the set, number, rarity, HP and illustrator sit beside it. Read from TCGdex; no API key needed.",
+  "icon": "ph-cards",
+  "supports": { "sizes": ["xs", "sm", "md", "lg"] },
+  "cell_options": [
+    {
+      "name": "mode", "type": "select", "label": "Pick from", "default": "any",
+      "choices": [
+        { "value": "any", "label": "Any card" },
+        { "value": "series", "label": "One series" },
+        { "value": "name", "label": "One Pokémon" }
+      ]
+    },
+    {
+      "name": "series", "type": "select", "label": "Series", "default": "sv",
+      "choices_from": "series",
+      "show_if": { "mode": "series" }
+    },
+    {
+      "name": "character", "type": "string", "label": "Pokémon", "default": "Pikachu",
+      "help": "Finds every card whose name contains this, so Pikachu also turns up Pikachu V and Ash's Pikachu.",
+      "show_if": { "mode": "name" }
+    },
+    {
+      "name": "exact_name", "type": "boolean", "label": "Exact name only", "default": false,
+      "help": "Only cards named exactly this: Pikachu, but not Pikachu V.",
+      "show_if": { "mode": "name" }
+    },
+    {
+      "name": "change", "type": "select", "label": "New card", "default": "refresh",
+      "choices": [
+        { "value": "refresh", "label": "Every refresh" },
+        { "value": "hour", "label": "Every hour" },
+        { "value": "day", "label": "Every day" }
+      ]
+    },
+    { "name": "show_details", "type": "boolean", "label": "Show card details (medium and large cells)", "default": true }
+  ],
+  "render": { "dither": "floyd-steinberg", "needs_network": true, "full_bleed": true },
+  "requires": [
+    "network:api.tcgdex.net",
+    "network:assets.tcgdex.net"
+  ],
+  "data_schema": {
+    "color": "#FFCB05",
+    "fields": [
+      { "name": "name", "type": "str", "label": "Card name" },
+      { "name": "set_name", "type": "str", "label": "Set" },
+      { "name": "number", "type": "str", "label": "Number" },
+      { "name": "rarity", "type": "str", "label": "Rarity" },
+      { "name": "illustrator", "type": "str", "label": "Illustrator" },
+      { "name": "hp", "type": "num", "label": "HP" },
+      { "name": "types", "type": "arr", "label": "Types" },
+      { "name": "url", "type": "str", "label": "Image URL" },
+      { "name": "pool", "type": "str", "label": "Picked from" }
+    ],
+    "sample": {
+      "url": "https://assets.tcgdex.net/en/swsh/swsh4.5/14/high.png",
+      "id": "swsh4.5-14",
+      "name": "Gossifleur",
+      "number": "14/72",
+      "set_name": "Shining Fates",
+      "rarity": "Common",
+      "illustrator": "Yukiko Baba",
+      "category": "Pokemon",
+      "stage": "Basic",
+      "hp": 60,
+      "types": ["Grass"],
+      "pool": "",
+      "pool_size": 22131
+    }
+  }
+}
